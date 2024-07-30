@@ -12,6 +12,10 @@ fi
 	env
 	build_test_suite_binaries
 	bundle .integration-daemon-start
+	update-alternatives --set iptables /usr/sbin/iptables-nft
+	update-alternatives --set ip6tables /usr/sbin/ip6tables-nft
+	update-alternatives --set arptables /usr/sbin/arptables-nft
+	update-alternatives --set ebtables /usr/sbin/ebtables-nft
 
 	testexit=0
 	(repeat run_test_integration) || testexit=$?
