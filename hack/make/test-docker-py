@@ -69,4 +69,7 @@ PY_TEST_OPTIONS="$PY_TEST_OPTIONS --deselect=tests/integration/api_image_test.py
 		exec docker run --rm ${run_opts} --mount type=bind,"src=${ABS_DEST}","dst=/src/${DEST}" "${docker_py_image}" pytest ${PY_TEST_OPTIONS} tests/integration
 	)
 	bundle .integration-daemon-stop
+	echo "XXX: rata. Printing dmesg"
+	dmesg -T || sudo dmesg -T || true
+	echo "XXX: rata. Printed dmesg"
 ) &> >(tee -a "$DEST/test.log")
