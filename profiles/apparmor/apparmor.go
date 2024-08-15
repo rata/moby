@@ -78,6 +78,8 @@ func InstallDefault(name string) error {
 	if daemonProfile == "" {
 		daemonProfile = "unconfined"
 	}
+	// XXX: rata. Always do unconfined.
+	daemonProfile = "unconfined"
 	p.DaemonProfile = daemonProfile
 
 	// Install to a temporary directory.

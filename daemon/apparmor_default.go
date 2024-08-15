@@ -18,14 +18,16 @@ const (
 // DefaultApparmorProfile returns the name of the default apparmor profile
 func DefaultApparmorProfile() string {
 	if apparmor.HostSupports() {
-		return defaultAppArmorProfile
+		//return defaultAppArmorProfile
+		return unconfinedAppArmorProfile
 	}
 	return ""
 }
 
 func ensureDefaultAppArmorProfile() error {
 	if apparmor.HostSupports() {
-		loaded, err := aaprofile.IsLoaded(defaultAppArmorProfile)
+		//loaded, err := aaprofile.IsLoaded(defaultAppArmorProfile)
+		loaded, err := aaprofile.IsLoaded(unconfinedAppArmorProfile)
 		if err != nil {
 			return fmt.Errorf("Could not check if %s AppArmor profile was loaded: %s", defaultAppArmorProfile, err)
 		}
