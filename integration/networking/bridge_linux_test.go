@@ -24,6 +24,7 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"gotest.tools/v3/assert"
 	is "gotest.tools/v3/assert/cmp"
+	"gotest.tools/v3/poll"
 	"gotest.tools/v3/skip"
 )
 
@@ -989,6 +990,8 @@ func TestProxy4To6(t *testing.T) {
 		container.WithCmd("httpd", "-f"),
 	)
 	defer c.ContainerRemove(ctx, serverId, containertypes.RemoveOptions{Force: true})
+
+	poll.WaitOn(t, container.IsInState(ctx, c, serverId, "running"), poll.WithDelay(100*time.Millisecond))
 
 	inspect := container.Inspect(ctx, t, c, serverId)
 	hostPort := inspect.NetworkSettings.Ports["80/tcp"][0].HostPort
