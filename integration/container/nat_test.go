@@ -36,7 +36,7 @@ func TestNetworkNat(t *testing.T) {
 		if err == nil {
 			break
 		}
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(1 * time.Second)
 	}
 	assert.NilError(t, err)
 	defer conn.Close()
@@ -61,7 +61,8 @@ func TestNetworkLocalhostTCPNat(t *testing.T) {
 		if err == nil {
 			break
 		}
-		time.Sleep(500 * time.Millisecond)
+		// The snapshotter driver can take longer to initialize, for some reason.
+		time.Sleep(1 * time.Second)
 	}
 	assert.NilError(t, err)
 	defer conn.Close()
