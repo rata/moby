@@ -30,12 +30,13 @@ func TestNetworkNat(t *testing.T) {
 
 	endpoint := getExternalAddress(t)
 	var err error
+	var conn net.Conn
 	for retry := 0; retry < 10; retry++ {
-		conn, err := net.Dial("tcp", net.JoinHostPort(endpoint.String(), "8080"))
+		conn, err = net.Dial("tcp", net.JoinHostPort(endpoint.String(), "8080"))
 		if err == nil {
 			break
 		}
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(200 * time.Millisecond)
 	}
 	assert.NilError(t, err)
 	defer conn.Close()
@@ -54,12 +55,13 @@ func TestNetworkLocalhostTCPNat(t *testing.T) {
 	startServerContainer(ctx, t, msg, 8081)
 
 	var err error
+	var conn net.Conn
 	for retry := 0; retry < 10; retry++ {
-		conn, err := net.Dial("tcp", "localhost:8081")
+		conn, err = net.Dial("tcp", "localhost:8081")
 		if err == nil {
 			break
 		}
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(200 * time.Millisecond)
 	}
 	assert.NilError(t, err)
 	defer conn.Close()
